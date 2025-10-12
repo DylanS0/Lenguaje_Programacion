@@ -1,0 +1,57 @@
+-----------------------------------------
+GUÍA DE USO - GESTOR DE TAREAS (task-manager)
+-----------------------------------------
+
+Este programa se maneja a través de comandos en la terminal.
+La estructura general de un comando es:
+./task-manager <comando> --argumento1="valor1" --argumento2="valor2"
+
+------------------
+COMANDOS PRINCIPALES
+------------------
+
+1. AÑADIR UNA TAREA (add)
+   Añade una nueva tarea a la lista. El título es obligatorio.
+
+   Uso:
+   ./task-manager add --title="El título de tu tarea" --desc="Una descripción opcional"
+
+   Ejemplos:
+   ./task-manager add --title="Comprar pan"
+   ./task-manager add --title="Hacer la presentación" --desc="Para la clase de programación"
+
+2. LISTAR TODAS LAS TAREAS (list)
+   Muestra todas las tareas pendientes y completadas.
+
+   Uso:
+   ./task-manager list
+
+3. ACTUALIZAR UNA TAREA (update)
+   Modifica los datos de una tarea existente. Debes especificar su ID.
+   Puedes cambiar el título, la descripción y/o marcarla como completada.
+
+   Uso:
+   ./task-manager update --id=<numero_id> [--title="nuevo título"] [--desc="nueva desc"] [--completed=true/false]
+
+   Ejemplos:
+   ./task-manager update --id=1 --completed=true
+   ./task-manager update --id=2 --title="Preparar la exposición final"
+   ./task-manager update --id=2 --desc="Incluir demos de código"
+
+4. ELIMINAR UNA TAREA (delete)
+   Borra permanentemente una tarea de la lista usando su ID.
+
+   Uso:
+   ./task-manager delete --id=<numero_id>
+
+   Ejemplo:
+   ./task-manager delete --id=3
+
+5. COMPLETAR UNA TAREA (complete)
+   Es un atajo para actualizar una tarea y marcarla como completada.
+
+   Uso:
+   ./task-manager complete <numero_id>
+
+   Ejemplo:
+   ./task-manager complete 2
