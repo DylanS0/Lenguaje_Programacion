@@ -6,20 +6,20 @@ import (
 	"os"
 )
 
-// archivoTareas define el formato del archivo JSON
+//define el formato del archivo json
 type archivoTareas struct {
 	UltimoID int     `json:"ultimo_id"`
 	Tareas   []Tarea `json:"tasks"`
 }
 
-// GestorTareas gestiona las tareas
+//gestiona las tareas
 type GestorTareas struct {
 	Tareas      []Tarea
 	rutaArchivo string
 	ultimoID    int
 }
 
-// NuevoGestorTareas crea un nuevo gestor
+//crea un nuevo gestor
 func NuevoGestorTareas(rutaArchivo string) (*GestorTareas, error) {
 	gt := &GestorTareas{
 		rutaArchivo: rutaArchivo,
@@ -31,7 +31,7 @@ func NuevoGestorTareas(rutaArchivo string) (*GestorTareas, error) {
 	return gt, nil
 }
 
-// cargarTareas lee el archivo JSON
+//lee el archivo json
 func (gt *GestorTareas) cargarTareas() error {
 	_, err := os.Stat(gt.rutaArchivo)
 	if os.IsNotExist(err) {
@@ -57,7 +57,7 @@ func (gt *GestorTareas) cargarTareas() error {
 		return nil
 	}
 
-	// Soporte para formato antiguo (solo array)
+	// tareas antiguas 
 	var tareasAntiguas []Tarea
 	if err := json.Unmarshal(data, &tareasAntiguas); err != nil {
 		return fmt.Errorf("archivo %s inválido", gt.rutaArchivo)
@@ -72,7 +72,7 @@ func (gt *GestorTareas) cargarTareas() error {
 	return nil
 }
 
-// guardarTareas guarda en el nuevo formato
+// guarda en el nuevo formato
 func (gt *GestorTareas) guardarTareas() error {
 	archivo := archivoTareas{
 		UltimoID: gt.ultimoID,
@@ -85,7 +85,7 @@ func (gt *GestorTareas) guardarTareas() error {
 	return os.WriteFile(gt.rutaArchivo, data, 0644)
 }
 
-// obtenerSiguienteID devuelve un ID único
+//devuelve un id nico
 func (gt *GestorTareas) obtenerSiguienteID() int {
 	gt.ultimoID++
 	return gt.ultimoID
