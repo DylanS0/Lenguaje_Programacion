@@ -7,9 +7,9 @@ import (
 	"testing"
 )
 
-// prepararPrueba crea un archivo json temporal y un GestorTareas para las pruebas
+//crea un archivo json temporal y para las pruebas
 func prepararPrueba(t *testing.T) (*GestorTareas, string, func()) {
-	// Crear un directorio temporal para la base de datos de prueba
+	//crear un directorio temporal para la base de datos de prueba
 	dirTemporal, err := os.MkdirTemp("", "pruebas_gestor_*")
 	if err != nil {
 		t.Fatalf("No se pudo crear el directorio temporal: %v", err)
@@ -17,13 +17,13 @@ func prepararPrueba(t *testing.T) (*GestorTareas, string, func()) {
 
 	archivoTemporal := filepath.Join(dirTemporal, "test_tasks.json")
 
-	// Crear el gestor apuntando al archivo temporal
+	//crear el gestor apuntando al archivo temporal
 	gestor, err := NuevoGestorTareas(archivoTemporal)
 	if err != nil {
 		t.Fatalf("No se pudo crear el GestorTareas: %v", err)
 	}
 
-	// La función de limpieza elimina el directorio temporal
+	//la función de limpieza elimina el directorio temporal
 	limpieza := func() {
 		os.RemoveAll(dirTemporal)
 	}
@@ -33,7 +33,7 @@ func prepararPrueba(t *testing.T) (*GestorTareas, string, func()) {
 
 func TestAddTask(t *testing.T) {
 	gestor, _, limpieza := prepararPrueba(t)
-	defer limpieza() // Asegurarse de que la limpieza se ejecute al final
+	defer limpieza() //asegurarse de que la limpieza se ejecute al final
 
 	titulo := "Tarea de prueba"
 	descripcion := "Descripción de prueba"
@@ -79,7 +79,7 @@ func TestDeleteTask(t *testing.T) {
 		t.Error("La tarea no fue eliminada correctamente")
 	}
 
-	// Probar eliminar una tarea que no existe
+	//probar eliminar una tarea que no existe
 	err = gestor.EliminarTarea(999)
 	if err == nil {
 		t.Error("Se esperaba un error al eliminar una tarea inexistente, pero no se obtuvo ninguno")
@@ -108,7 +108,7 @@ func TestUpdateTask(t *testing.T) {
 	}
 
 	tareaActualizada := tareas[0]
-	// Se comprueban los nuevos valores
+	//se comprueban los nuevos valores
 	if tareaActualizada.Titulo != nuevoTitulo || tareaActualizada.Descripcion != nuevaDescripcion || tareaActualizada.Estado != nuevoEstado {
 		t.Errorf("La tarea no se actualizó correctamente. Obtenido: %+v", tareaActualizada)
 	}
@@ -131,12 +131,12 @@ func TestPersistence(t *testing.T) {
 	gestor, archivoBD, limpieza := prepararPrueba(t)
 	defer limpieza()
 
-	// Añadir una tarea y "cerrar" el gestor (simulado al perder la referencia)
+	//añadir una tarea y cerrar el gestor (simulado al perder la referencia)
 	titulo := "Persistencia"
 	descripcion := "Probar guardado y carga"
 	gestor.AgregarTarea(titulo, descripcion) // Por defecto, Estado es 'Iniciado'
 
-	// Crear un nuevo gestor que cargue desde el mismo archivo
+	//crear un nuevo gestor que cargue desde el mismo archivo
 	nuevoGestor, err := NuevoGestorTareas(archivoBD)
 	if err != nil {
 		t.Fatalf("Fallo al crear un nuevo gestor desde un archivo existente: %v", err)
@@ -152,12 +152,12 @@ func TestPersistence(t *testing.T) {
 	}
 }
 
-// Test para verificar que los IDs son irrepetibles tras eliminación y reinicio
+//test para verificar que los id son irrepetibles tras eliminación y reinicio
 func TestUniqueIDAfterDeleteAndRestart(t *testing.T) {
 	gestor, archivoBD, limpieza := prepararPrueba(t)
 	defer limpieza()
 
-	// Agregar dos tareas
+	//agregar dos tareas
 	id1, _ := gestor.AgregarTarea("Tarea 1", "")
 	id2, _ := gestor.AgregarTarea("Tarea 2", "")
 
@@ -165,13 +165,13 @@ func TestUniqueIDAfterDeleteAndRestart(t *testing.T) {
 		t.Fatalf("IDs iniciales incorrectos: %d, %d", id1, id2)
 	}
 
-	// Eliminar la tarea con ID más alto
+	//eliminar la tarea con id mas alto
 	err := gestor.EliminarTarea(id2)
 	if err != nil {
 		t.Fatalf("No se pudo eliminar la tarea: %v", err)
 	}
 
-	// Agregar una nueva tarea → debe tener ID = 3
+	//agregar una nueva tarea → debe tener ID = 3
 	id3, err := gestor.AgregarTarea("Tarea 3", "")
 	if err != nil {
 		t.Fatalf("No se pudo agregar la tercera tarea: %v", err)
@@ -180,13 +180,13 @@ func TestUniqueIDAfterDeleteAndRestart(t *testing.T) {
 		t.Errorf("Se esperaba ID 3, pero se obtuvo %d", id3)
 	}
 
-	// Reiniciar el gestor (simula reinicio del programa)
+	//reiniciar el gestor (simula reinicio del programa)
 	nuevoGestor, err := NuevoGestorTareas(archivoBD)
 	if err != nil {
 		t.Fatalf("No se pudo reiniciar el gestor: %v", err)
 	}
 
-	// Agregar otra tarea → debe ser ID = 4
+	//agregar otra tarea → debe ser ID = 4
 	id4, err := nuevoGestor.AgregarTarea("Tarea 4", "")
 	if err != nil {
 		t.Fatalf("No se pudo agregar la cuarta tarea: %v", err)
