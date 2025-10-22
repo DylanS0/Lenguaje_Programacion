@@ -1,0 +1,68 @@
+======================================
+GUÍA DE USO - GESTOR DE TAREAS CLI
+======================================
+
+¡Bienvenido a tu asistente de tareas personal!
+
+Este documento explica cómo compilar y usar la aplicación desde la línea de comandos.
+
+----------------
+1. COMPILACIÓN
+----------------
+
+Para poder usar el programa, primero necesitas compilarlo. Asegúrate de tener Rust instalado.
+
+1. Abre una terminal o línea de comandos.
+2. Navega hasta la carpeta raíz del proyecto (`gestor/`).
+3. Ejecuta el siguiente comando para compilar el proyecto:
+
+   cargo build --release
+
+   Esto creará un archivo ejecutable en `target/release/gestor`.
+
+----------------
+2. USO
+----------------
+
+Una vez compilado, puedes ejecutar el programa. Las tareas se guardarán en un archivo `tareas.json`.
+
+La estructura básica de un comando es:
+
+   ./target/release/gestor <comando> [argumentos]
+
+A continuación se detallan los comandos disponibles:
+
+---
+a) Agregar una nueva tarea
+---
+Usa el comando `agregar` seguido de la descripción de la tarea.
+
+Ejemplo:
+   ./target/release/gestor agregar "Comprar leche y pan"
+
+---
+b) Listar tareas
+---
+Usa `listar` para ver todas tus tareas. Puedes filtrar por 'pendientes', 'en-progreso', 'realizadas'.
+
+Ejemplo:
+   ./target/release/gestor listar
+
+Ejemplo con filtro:
+   ./target/release/gestor listar realizadas
+
+---
+c) Actualizar el estado de una tarea
+---
+Usa `actualizar-estado` seguido del ID y el nuevo estado ('pendiente', 'en-progreso', 'realizada').
+
+Ejemplo:
+   ./target/release/gestor actualizar-estado 1 en-progreso
+
+---
+d) Eliminar una tarea
+---
+Usa `eliminar` seguido del ID de la tarea.
+
+Ejemplo:
+   ./target/release/gestor eliminar 3
