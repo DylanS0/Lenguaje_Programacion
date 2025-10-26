@@ -1,0 +1,29 @@
+{
+  "tareas": [
+    {
+      "id": 1,
+      "descripcion": "prueba1",
+      "estado": "Realizada",
+      "fecha_creacion": "2025-10-22T15:16:16.046068700Z",
+      "fecha_modificacion": "2025-10-22T15:16:49.592954100Z",
+      "fecha_realizacion": "2025-10-22T15:16:49.592954100Z"
+    },
+    {
+      "id": 2,
+      "descripcion": "prueba2",
+      "estado": "Pendiente",
+      "fecha_creacion": "2025-10-22T15:17:00.141598100Z",
+      "fecha_modificacion": "2025-10-22T15:17:00.141598100Z",
+      "fecha_realizacion": null
+    },
+    {
+      "id": 4,
+      "descripcion": "prueba4",
+      "estado": "Pendiente",
+      "fecha_creacion": "2025-10-22T15:17:23.731392900Z",
+      "fecha_modificacion": "2025-10-22T15:17:23.731392900Z",
+      "fecha_realizacion": null
+    }
+  ],
+  "ultimo_id": 4
+}

@@ -1,0 +1,16 @@
+[package]
+name = "gestor"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+# --- NUEVA DEPENDENCIA ---
+# La necesitamos para manejar fechas y horas.
+# La feature "serde" es crucial para que se integre con serde_json.
+chrono = { version = "0.4", features = ["serde"] }
+
+[[test]]
+name = "pruebas_integracion"
+path = "testing/tests.rs"
