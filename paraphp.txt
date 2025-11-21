@@ -1,0 +1,19 @@
+2. 🌍 Camino Alternativo: Servir el Formulario desde PHP (Uso como Frontend separado)
+Si el formulario está tan ligado a la lógica de PHP que no puedes o no quieres eliminarlo, deberás mantener el servidor PHP corriendo y hacer que FastAPI sea solo el Backend API.
+
+En este escenario, tu ruta de FastAPI (/) no serviría el HTML directamente.
+
+Lo que tendrías que hacer:
+Mantener el Servidor PHP corriendo (ej: Apache/Nginx con PHP-FPM).
+
+Cambiar el action del formulario PHP: El formulario PHP debe enviar los datos de registro/login directamente a tu API de FastAPI usando peticiones POST.
+
+Servidor PHP (Frontend): Sirve la página con el formulario.
+
+Formulario HTML (dentro del archivo PHP):
+
+HTML
+
+<form action="http://localhost:8000/api/v1/register" method="POST">
+    </form>
+FastAPI (Backend): Recibe el POST en /api/v1/register, procesa la lógica y devuelve una respuesta (ej: JSON). El frontend de PHP entonces manejaría la redirección o el mensaje de éxito.
